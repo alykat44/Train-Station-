@@ -1,8 +1,8 @@
 $(document).ready(function(){
-	// 1. Link to Firebase
+
 	var trainData = new Firebase("https://train-database.firebaseio.com/");
 
-	// 2. Button for adding Trains
+	// 2. Adding Trains
 	$("#addTrainBtn").on("click", function(){
 
 		// Grabs user input and assign to variables
@@ -11,14 +11,14 @@ $(document).ready(function(){
 		var trainTimeInput = moment($("#trainTimeInput").val().trim(), "HH:mm").subtract(10, "years").format("X");;
 		var frequencyInput = $("#frequencyInput").val().trim();
 
-		// Test for variables entered
+		
 		console.log(trainName);
 		console.log(destination);
 		console.log(trainTimeInput);
 		console.log(frequencyInput);
 
-		// Creates local "temporary" object for holding train data
-		// Will push this to firebase
+		// "temporary" train data
+		// push this to firebase
 		var newTrain = {
 			name:  trainName,
 			destination: destination,
@@ -26,10 +26,10 @@ $(document).ready(function(){
 			frequency: frequencyInput,
 		}
 
-		// pushing trainInfo to Firebase
+		
 		trainData.push(newTrain);
 
-		// clear text-boxes
+		// text-boxes
 		$("#trainNameInput").val("");
 		$("#destinationInput").val("");
 		$("#trainInput").val("");
@@ -43,7 +43,7 @@ $(document).ready(function(){
 
 		console.log(childSnapshot.val());
 
-		// assign firebase variables to snapshots.
+		//  snapshots.
 		var firebaseName = childSnapshot.val().name;
 		var firebaseDestination = childSnapshot.val().destination;
 		var firebaseTrainTimeInput = childSnapshot.val().trainTime;
@@ -55,13 +55,13 @@ $(document).ready(function(){
 
 		var nextTrainArrival = moment().add(minutes, "m").format("hh:mm A"); 
 		
-		// Test for correct times and info
+		// Test for correct times
 		console.log(minutes);
 		console.log(moment().format("hh:mm A"));
 		console.log(nextTrainArrival);
 		console.log(moment().format("X"));
 
-		// Append train info to table on page
+		// Append train info 
 		$("#trainTable > tbody").append("<tr><td>" + firebaseName + "</td><td>"+ firebaseDestination + "</td><td>" + firebaseFrequency + " mins" + "</td><td>" + nextTrainArrival + "</td><td>" + minutes + "</td></tr>");
 
 	});
